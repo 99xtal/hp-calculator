@@ -1,0 +1,143 @@
+body {
+  background-color: black;
+}
+
+h6 {
+  color: #f3e8d6;
+}
+
+#calculator {
+  background-color: #494039;
+  width: 400px;
+  height: 724px;
+  margin-top: 20%;
+  padding-top: 32px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 16px;
+  border-radius: 10px;
+}
+
+#inner {
+  width: auto;
+  height: 684px;
+  border-style: solid;
+  border-color: rgb(36, 36, 36);
+  border-width: 3px;
+  border-radius: 10px;
+}
+
+#screen-and-text {
+  background-color: #2f2317;
+  height: 240px;
+  border-style: solid;
+  border-color: rgb(36, 36, 36);
+  border-width: 3px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#top-text {
+  height: 55px;
+  width: 368px;
+  padding-right: 10px;
+}
+
+#twenty-s {
+  padding-top: 25px;
+}
+
+#scientific {
+  padding-top: 25px;
+  text-align: right;
+}
+
+#screen-shield {
+  margin-top: 0px;
+  width: 296px;
+  height: 120px;
+  background-color: #494039;
+  border-radius: 10px;
+}
+
+#screen {
+  width: 50px;
+  height: 90px;
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: #aebb9d;
+  border-radius: 10px;
+  text-align: left;
+  color: #494039;
+}
+
+#screen > h2 {
+  font-size: 45px;
+}
+
+.button {
+  display: inline-block;
+  background-color: #2f2317;
+  color: #f3e8d6;
+  width: 45px;
+  height: 25px;
+  border-radius: 5px;
+  margin-top: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.bigger {
+  width: 55px;
+}
+
+.right-spacing {
+  margin-right: 25px;
+}
+
+#input {
+  width: 105px;
+}
+
+.orange-text {
+  color: #fdc66c;
+  font-size: 7px;
+  display: inline-block;
+}
+
+.blue-text {
+  color: #97cae5;
+  font-size: 7px;
+  display: inline-block;
+}
+
+.upper-text {
+  margin-left: 17px;
+  display: inline-block;
+  text-align: justify;
+}
+
+.upper-text-2 {
+  margin-left: 5px;
+  display: inline-block;
+  text-align: justify;
+}
+
+#logo {
+  filter: invert(1);
+  width: 27%;
+}
+
+#blue-shift {
+  background-color: #97cae5;
+  color: rgb(36, 36, 36);
+}
+
+#orange-shift {
+  background-color: #fdc66c;
+  color: rgb(36, 36, 36);
+}
