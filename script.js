@@ -23,7 +23,15 @@ const setNum = function () {
     resultNum = "";
   } else if (!resultNum && currNum.length < 12) {
     //add current number if number length <= 12
-    currNum += this.getAttribute("data-num");
+    if (this.getAttribute("data-num") === ".") {
+      //if input is decimal, check that there are no other decimal points in the current number already
+      if (!currNum.includes(".")) {
+        currNum += this.getAttribute("data-num");
+      }
+    } else {
+      //for every other number
+      currNum += this.getAttribute("data-num");
+    }
   } else {
     //do nothing if number length > 12
     null;
