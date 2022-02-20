@@ -8,47 +8,76 @@ var el = function (element) {
   }
 };
 
-let nums = el(".num");
 let output = el("#output");
-let clear = el("#clear");
-let currNum = "";
-let oldNum, resultNum;
+let inputNum = "";
+let currentNum = 0;
+let oldNum = 0;
+let resultNum = 0;
 
+//Initialize calculator
 function init() {
-  addNumberListeners();
-  addClearListener();
+  addNumberListeners(el(".num"));
+  addOperationListeners();
 }
 
-//Add key event listeners
-function addNumberListeners() {
-  nums.forEach((numKey) => {
+//Add number key event listeners
+function addNumberListeners(numElements) {
+  numElements.forEach((numKey) => {
     numKey.addEventListener("click", displayInput);
   });
 }
 
-function addClearListener() {
-  clear.addEventListener("click", clearNums);
+//Add operation key event listeners
+function addOperationListeners() {
+  el("#clear").addEventListener("click", clear);
+  el("#add").addEventListener("click", add);
 }
 
+//Display number to screen
 function display(num) {
   output.innerHTML = num;
 }
 
+//Display and store user input
 function displayInput() {
-  if (resultNum) {
-    currNum = this.getAttribute("data-num");
-    resultNum = "";
-  } else if (!resultNum && currNum.length < 12) {
-    currNum += this.getAttribute("data-num");
+  display("");
+  if (inputNum === "0") {
+    inputNum = this.getAttribute("data-num");
+  } else if (inputNum.length < 12) {
+    inputNum += this.getAttribute("data-num");
   }
-  display(currNum);
+  display(inputNum);
 }
 
-function clearNums() {
-  currNum = "0";
-  oldNum = "";
-  resultNum = "";
-  display(currNum);
+function clear() {
+  inputNum = "0";
+  currentNum = 0;
+  oldNum = 0;
+  resultNum = 0;
+  display(inputNum);
+}
+
+function add() {
+  if (inputNum) {
+    setOldAndCurrent();
+    resultNum = currentNum + oldNum;
+    setResult();
+    display(resultNum);
+    console.log(`Current: ${currentNum} Old: ${oldNum}`);
+  } else {
+    null;
+  }
+}
+
+function setOldAndCurrent() {
+  oldNum = currentNum;
+  currentNum = parseFloat(inputNum);
+  inputNum = "";
+}
+
+function setResult() {
+  oldNum = currentNum;
+  currentNum = resultNum;
 }
 
 init();
