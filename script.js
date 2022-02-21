@@ -16,30 +16,7 @@ let resultNum = 0;
 
 //Map containing operation functions
 const operations = new Map([
-  [
-    "add",
-    (a, b) => {
-      return a + b;
-    },
-  ],
-  [
-    "subtract",
-    (a, b) => {
-      return a - b;
-    },
-  ],
-  [
-    "multiply",
-    (a, b) => {
-      return a * b;
-    },
-  ],
-  [
-    "divide",
-    (a, b) => {
-      return a / b;
-    },
-  ],
+  //Row 1 operations
   [
     "sqrt",
     (x) => {
@@ -50,6 +27,77 @@ const operations = new Map([
     "exp",
     (x) => {
       return Math.exp(x);
+    },
+  ],
+  [
+    "ln",
+    (x) => {
+      return Math.log(x);
+    },
+  ],
+  ["y-to-x-power", (x, y) => {}],
+  [
+    "1-over-x",
+    (x) => {
+      return 1 / x;
+    },
+  ],
+  ["sigma-plus", () => {}],
+  //Row 2 operations
+  [
+    "sin",
+    (x) => {
+      return Math.sin(x);
+    },
+  ],
+  [
+    "cos",
+    (x) => {
+      return Math.cos(x);
+    },
+  ],
+  [
+    "tan",
+    (x) => {
+      return Math.tan(x);
+    },
+  ],
+  //Row 3 operations
+  [
+    "pos-neg",
+    (x) => {
+      return -x;
+    },
+  ],
+  //Row 4 operations
+  [
+    "divide",
+    (a, b) => {
+      return a / b;
+    },
+  ],
+
+  //Row 5 operations
+  [
+    "multiply",
+    (a, b) => {
+      return a * b;
+    },
+  ],
+
+  //Row 6 operations
+  [
+    "subtract",
+    (a, b) => {
+      return b - a;
+    },
+  ],
+
+  //Row 7 operations
+  [
+    "add",
+    (a, b) => {
+      return a + b;
     },
   ],
 ]);
@@ -82,7 +130,7 @@ function display(num) {
   output.innerHTML = num;
 }
 
-//
+//Store user input & display to screen
 function storeInput() {
   display("");
   if (inputNum === "0") {
@@ -102,33 +150,59 @@ function storeInput() {
 //clear
 function clear() {
   inputNum = "0";
-  currentNum = 0;
-  oldNum = 0;
-  resultNum = 0;
+  currentNum = null;
+  oldNum = null;
+  resultNum = null;
   display(inputNum);
 }
 
 //perform operation on old and current number and display result
 function doOperation(op) {
-  if (inputNum) {
-    setOldAndCurrent();
+  const operation = operations.get(op);
+  //If operation takes 1 argument
+  if (operation.length === 1) {
+    if (inputNum) {
+      pushInput();
+    }
+    // console.log(
+    //   `Current number: ${currentNum + typeof currentNum}, Old number: ${oldNum}`
+    // );
     const operation = operations.get(op);
-    resultNum = operation(currentNum, oldNum);
-    setResult();
-    display(resultNum);
-    console.log(`Current: ${currentNum} Old: ${oldNum}`);
+    resultNum = operation(currentNum);
+    pushResult();
+    // console.log(
+    //   `Current number: ${currentNum + typeof currentNum}, Old number: ${oldNum}`
+    // );
+  }
+  //If operation takes 2 arguments
+  if (operation.length === 2) {
+    if (inputNum) {
+      if (currentNum === null) {
+        pushInput();
+      } else {
+        pushInput();
+        const operation = operations.get(op);
+        resultNum = operation(currentNum, oldNum);
+        pushResult();
+      }
+    }
   }
 }
 
-function setOldAndCurrent() {
+//Input --> Current, Current --> Old
+function pushInput() {
   oldNum = currentNum;
   currentNum = parseFloat(inputNum);
+  display(inputNum);
   inputNum = "";
 }
 
-function setResult() {
+//Result --> Current, Current --> Old
+function pushResult() {
   oldNum = currentNum;
   currentNum = resultNum;
+  display(resultNum);
+  inputNum = "";
 }
 
 init();
