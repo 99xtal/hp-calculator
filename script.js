@@ -1,6 +1,7 @@
 "use strict";
 
-var el = function (element) {
+
+const el = function (element) {
   if (element.charAt(0) === "#") {
     return document.querySelector(element);
   } else {
@@ -14,6 +15,14 @@ let currentNum = 0;
 let oldNum = 0;
 let resultNum = 0;
 
+//Map containing operation functions
+const operations = new Map([
+  ["add", (a,b) => {return(a + b)}],
+  ["subtract", (a,b) => {return(a-b)}],
+  ["multiply", (a,b) => {return(a*b)}],
+  ["divide", (a,b,) => {return(a/b)}]
+]);
+
 //Initialize calculator
 function init() {
   addNumberListeners(el(".num"));
@@ -23,14 +32,19 @@ function init() {
 //Add number key event listeners
 function addNumberListeners(numElements) {
   numElements.forEach((numKey) => {
-    numKey.addEventListener("click", displayInput);
+    numKey.addEventListener("click", storeInput);
   });
 }
 
 //Add operation key event listeners
 function addOperationListeners() {
   el("#clear").addEventListener("click", clear);
-  el("#add").addEventListener("click", add);
+  el("#add").addEventListener("click", () => {
+    doOperation("add");
+  });
+  el("#subtract").addEventListener("click", () => {
+    doOperation("subtract");
+  });
 }
 
 //Display number to screen
@@ -38,8 +52,8 @@ function display(num) {
   output.innerHTML = num;
 }
 
-//Display and store user input
-function displayInput() {
+//
+function storeInput() {
   display("");
   if (inputNum === "0") {
     inputNum = this.getAttribute("data-num");
@@ -49,6 +63,7 @@ function displayInput() {
   display(inputNum);
 }
 
+//clear
 function clear() {
   inputNum = "0";
   currentNum = 0;
@@ -57,15 +72,15 @@ function clear() {
   display(inputNum);
 }
 
-function add() {
+//perform operation on old and current number and display result
+function doOperation(op) {
   if (inputNum) {
     setOldAndCurrent();
-    resultNum = currentNum + oldNum;
+    const operation = operations.get(op);
+    resultNum = operation(currentNum, oldNum);
     setResult();
     display(resultNum);
     console.log(`Current: ${currentNum} Old: ${oldNum}`);
-  } else {
-    null;
   }
 }
 
