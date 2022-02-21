@@ -1,6 +1,5 @@
 "use strict";
 
-
 const el = function (element) {
   if (element.charAt(0) === "#") {
     return document.querySelector(element);
@@ -17,33 +16,64 @@ let resultNum = 0;
 
 //Map containing operation functions
 const operations = new Map([
-  ["add", (a,b) => {return(a + b)}],
-  ["subtract", (a,b) => {return(a-b)}],
-  ["multiply", (a,b) => {return(a*b)}],
-  ["divide", (a,b,) => {return(a/b)}]
+  [
+    "add",
+    (a, b) => {
+      return a + b;
+    },
+  ],
+  [
+    "subtract",
+    (a, b) => {
+      return a - b;
+    },
+  ],
+  [
+    "multiply",
+    (a, b) => {
+      return a * b;
+    },
+  ],
+  [
+    "divide",
+    (a, b) => {
+      return a / b;
+    },
+  ],
+  [
+    "sqrt",
+    (x) => {
+      return Math.sqrt(x);
+    },
+  ],
+  [
+    "exp",
+    (x) => {
+      return Math.exp(x);
+    },
+  ],
 ]);
 
 //Initialize calculator
 function init() {
-  addNumberListeners(el(".num"));
+  addNumberListeners();
   addOperationListeners();
+  el("#clear").addEventListener("click", clear);
 }
 
 //Add number key event listeners
-function addNumberListeners(numElements) {
-  numElements.forEach((numKey) => {
+function addNumberListeners() {
+  el(".num").forEach((numKey) => {
     numKey.addEventListener("click", storeInput);
   });
 }
 
 //Add operation key event listeners
 function addOperationListeners() {
-  el("#clear").addEventListener("click", clear);
-  el("#add").addEventListener("click", () => {
-    doOperation("add");
-  });
-  el("#subtract").addEventListener("click", () => {
-    doOperation("subtract");
+  el(".op").forEach((opkey) => {
+    opkey.addEventListener("click", () => {
+      doOperation(opkey.getAttribute("data-op"));
+    });
   });
 }
 
@@ -58,7 +88,13 @@ function storeInput() {
   if (inputNum === "0") {
     inputNum = this.getAttribute("data-num");
   } else if (inputNum.length < 12) {
-    inputNum += this.getAttribute("data-num");
+    if (this.getAttribute("data-num") === ".") {
+      if (!inputNum.includes(".")) {
+        inputNum += this.getAttribute("data-num");
+      }
+    } else {
+      inputNum += this.getAttribute("data-num");
+    }
   }
   display(inputNum);
 }
@@ -96,40 +132,3 @@ function setResult() {
 }
 
 init();
-
-// //display current number to output screen
-// const setNum = function () {
-//   if (resultNum) {
-//     //if result previously displayed, clear and reset result
-//     currNum = this.getAttribute("data-num");
-//     resultNum = "";
-//   } else if (!resultNum && currNum.length < 12) {
-//     //add current number if number length <= 12
-//     if (this.getAttribute("data-num") === ".") {
-//       //if input is decimal, check that there are no other decimal points in the current number already
-//       if (!currNum.includes(".")) {
-//         currNum += this.getAttribute("data-num");
-//       }
-//     } else {
-//       //for every other number
-//       currNum += this.getAttribute("data-num");
-//     }
-//   }
-//   output.innerHTML = currNum;
-// };
-
-// //clear button
-// const clearCalc = function () {
-//   currNum = "";
-//   oldNum = "";
-//   resultNum = "";
-//   output.innerHTML = currNum;
-// };
-
-// //add click events to numbers
-// nums.forEach(function (element) {
-//   element.onclick = setNum;
-// });
-
-// //add click event for clear
-// clear.onclick = clearCalc;
