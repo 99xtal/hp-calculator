@@ -127,7 +127,7 @@ function addOperationListeners() {
 
 //Display number to screen
 function display(num) {
-  output.innerHTML = num;
+  output.innerHTML = toENotation(num);
 }
 
 //Store user input & display to screen
@@ -167,7 +167,6 @@ function doOperation(op) {
     // console.log(
     //   `Current number: ${currentNum + typeof currentNum}, Old number: ${oldNum}`
     // );
-    const operation = operations.get(op);
     resultNum = operation(currentNum);
     pushResult();
     // console.log(
@@ -181,7 +180,6 @@ function doOperation(op) {
         pushInput();
       } else {
         pushInput();
-        const operation = operations.get(op);
         resultNum = operation(currentNum, oldNum);
         pushResult();
       }
@@ -203,6 +201,17 @@ function pushResult() {
   currentNum = resultNum;
   display(resultNum);
   inputNum = "";
+}
+
+function toENotation(num) {
+  const numArr = num.toString().split("");
+  if (numArr.length > 12) {
+    numArr.splice(13);
+    const eNum = parseFloat(numArr.join(""));
+    return eNum;
+  } else {
+    return num;
+  }
 }
 
 init();
