@@ -106,9 +106,16 @@ const operations = new Map([
 function init() {
   addNumberListeners();
   addOperationListeners();
+  addButtonListeners();
   el("#clear").addEventListener("click", clear);
 }
 
+function addButtonListeners() {
+  el(".button").forEach((btnKey) => {
+    btnKey.addEventListener("mousedown", buttonPress);
+    btnKey.addEventListener("mouseup", buttonPress);
+  });
+}
 //Add number key event listeners
 function addNumberListeners() {
   el(".num").forEach((numKey) => {
@@ -125,6 +132,16 @@ function addOperationListeners() {
   });
 }
 
+let isPressed = false;
+function buttonPress() {
+  if (!isPressed) {
+    this.style.backgroundColor = "#110d08";
+    isPressed = true;
+  } else {
+    this.style.backgroundColor = "#2f2317";
+    isPressed = false;
+  }
+}
 //Display number to screen
 function display(num) {
   output.innerHTML = toENotation(num);
@@ -206,7 +223,7 @@ function pushResult() {
 function toENotation(num) {
   const numArr = num.toString().split("");
   if (numArr.length > 12) {
-    numArr.splice(13);
+    numArr.splice(12);
     const eNum = parseFloat(numArr.join(""));
     return eNum;
   } else {

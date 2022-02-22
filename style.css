@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "DS-DIGII";
+  src: url("resources/fonts/DS-DIGII.TTF") format("truetype");
+}
+
 body {
   background-color: black;
 }
@@ -74,7 +79,8 @@ h6 {
 }
 
 #screen > h2 {
-  font-size: 45px;
+  font-family: "DS-DIGII";
+  font-size: 55px;
 }
 
 .button {
